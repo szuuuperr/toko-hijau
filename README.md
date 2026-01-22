@@ -2,64 +2,37 @@
 
 Aplikasi web e-commerce untuk produk ramah lingkungan, dibangun dengan React + Vite (Frontend) dan Node.js + Express + MongoDB (Backend).
 
-## 📸 Preview
-
-Website toko online yang menjual produk-produk sustainable dan ramah lingkungan.
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **React** - UI Library
-- **TypeScript** - Type Safety
-- **Vite** - Build Tool
-- **Tailwind CSS** - Styling
-- **Axios** - HTTP Client
-- **Lucide React** - Icons
-
-### Backend
-- **Node.js** - Runtime
-- **Express.js** - Web Framework
-- **MongoDB** - Database
-- **Mongoose** - ODM
-
 ## 📁 Struktur Project
 
 ```
 WebTokoHijau/
-├── backend/                 # Backend API
-│   ├── config/
-│   │   └── db.js           # Database connection
-│   ├── controllers/
-│   │   └── productController.js
-│   ├── models/
-│   │   └── Product.js      # Product schema
-│   ├── routes/
-│   │   └── productRoutes.js
-│   ├── .env                # Environment variables
+├── frontend/                # Frontend React + Vite
+│   ├── src/
+│   │   ├── Component/      # Komponen React
+│   │   ├── Pages/          # Halaman aplikasi
+│   │   ├── services/       # API services
+│   │   └── App.tsx
+│   ├── public/
 │   ├── package.json
-│   ├── seed.js             # Database seeder
-│   └── server.js           # Entry point
+│   └── vite.config.ts
 │
-├── src/                     # Frontend React
-│   ├── Component/          # Komponen React
-│   │   ├── admin/          # Komponen Admin
-│   │   ├── figma/          # Komponen dari Figma
-│   │   ├── ui/             # UI Components
-│   │   └── *.tsx           # Komponen utama
-│   ├── Pages/              # Halaman aplikasi
-│   │   ├── ProductsPage.tsx
-│   │   ├── ProductDetailPage.tsx
-│   │   ├── LoginPage.tsx
-│   │   ├── RegisterPage.tsx
-│   │   └── AdminLoginPage.tsx
-│   ├── services/           # API services
-│   │   └── api.ts
-│   ├── styles/             # CSS Global
-│   ├── App.tsx
-│   └── main.tsx
+├── backend/                 # Backend API Express + MongoDB
+│   ├── config/db.js
+│   ├── controllers/
+│   │   ├── productController.js
+│   │   └── authController.js
+│   ├── models/
+│   │   ├── Product.js
+│   │   └── User.js
+│   ├── routes/
+│   │   ├── productRoutes.js
+│   │   └── authRoutes.js
+│   ├── .env
+│   ├── package.json
+│   ├── seed.js
+│   └── server.js
 │
-├── package.json
-├── vite.config.ts
+├── .gitignore
 └── README.md
 ```
 
@@ -69,14 +42,15 @@ WebTokoHijau/
 - Node.js v18+
 - MongoDB Atlas account (atau MongoDB local)
 
-### 1. Clone & Install Dependencies
+### 1. Install Dependencies
 
 ```bash
 # Install frontend dependencies
+cd frontend
 npm install
 
 # Install backend dependencies
-cd backend
+cd ../backend
 npm install
 ```
 
@@ -90,11 +64,13 @@ npm install
 
 ### 3. Configure Environment
 
-Edit `backend/.env`:
+Buat/edit `backend/.env`:
 ```env
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/tokohijau
 PORT=5000
 NODE_ENV=development
+JWT_SECRET=your-secret-key
+JWT_EXPIRE=30d
 ```
 
 ### 4. Seed Database (Optional)
@@ -114,6 +90,7 @@ npm run dev
 
 **Terminal 2 - Frontend:**
 ```bash
+cd frontend
 npm run dev
 ```
 
@@ -121,6 +98,7 @@ Buka browser: http://localhost:5173
 
 ## 📡 API Endpoints
 
+### Products
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | /api/products | Get semua produk |
@@ -129,13 +107,11 @@ Buka browser: http://localhost:5173
 | PUT | /api/products/:id | Update produk |
 | DELETE | /api/products/:id | Hapus produk |
 
-### Query Parameters
-
-- `category` - Filter kategori
-- `search` - Pencarian nama
-- `minPrice` - Harga minimum
-- `maxPrice` - Harga maksimum
-- `sort` - Sorting (price-asc, price-desc, newest, rating)
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/auth/register | Registrasi user baru |
+| POST | /api/auth/login | Login user |
 
 ## 📦 Fitur
 
@@ -143,30 +119,33 @@ Buka browser: http://localhost:5173
 - ✅ Halaman Home dengan Hero & Featured Products
 - ✅ Halaman Produk dengan Filter & Search
 - ✅ Halaman Detail Produk
-- ✅ Halaman Login & Register
+- ✅ Halaman Login & Register dengan JWT
+- ✅ Navbar dinamis (berubah saat login)
 - ✅ Admin Dashboard
 - ✅ Responsive Design
-- ✅ Loading & Error States
 
 ### Backend
 - ✅ RESTful API
 - ✅ CRUD Operations
-- ✅ Data Validation
+- ✅ JWT Authentication
+- ✅ Password Hashing (bcrypt)
 - ✅ MongoDB Integration
 - ✅ Error Handling
-- ✅ CORS Enabled
 
-## 👨‍💻 Development
+## 🚀 Deployment
 
+### Frontend (Vercel/Netlify)
 ```bash
-# Frontend dev server
-npm run dev
-
-# Backend dev server (with nodemon)
-cd backend && npm run dev
-
-# Build frontend
+cd frontend
 npm run build
+# Upload dist folder
+```
+
+### Backend (Railway/Render)
+```bash
+cd backend
+# Push to GitHub, connect to Railway/Render
+# Set environment variables
 ```
 
 ## 📄 License
