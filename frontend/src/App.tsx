@@ -11,6 +11,8 @@ import { RegisterPage } from './Pages/RegisterPage';
 import { AdminLoginPage } from './Pages/AdminLoginPage';
 import { AdminDashboard } from './Component/admin/AdminDashboard';
 import { authAPI, type User } from './services/api';
+import ReactGA from "react-ga4";
+
 
 type PageType = 'home' | 'products' | 'detail' | 'login' | 'register' | 'admin-login' | 'admin-dashboard';
 
@@ -27,6 +29,10 @@ export default function App() {
       setUser(savedUser);
       setIsLoggedIn(true);
     }
+    ReactGA.send({
+    hitType: "pageview",
+    page: `/${currentPage}`,
+    })
   }, []);
 
   const handleProductClick = (productId: string) => {
@@ -97,6 +103,7 @@ export default function App() {
   const showNavAndFooter = currentPage !== 'login' && currentPage !== 'register' && currentPage !== 'admin-login' && currentPage !== 'admin-dashboard';
 
   return (
+    
     <div className="min-h-screen bg-white">
       {showNavAndFooter && <Navbar currentPage={getNavPage()} onNavigate={handleNavigate} isLoggedIn={isLoggedIn} user={user} onLogout={handleLogout} />}
       {renderPage()}
